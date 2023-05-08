@@ -197,7 +197,7 @@ INSERT INTO database_datajourney.example_table (text_col, int_col, created_at) V
 (1538605475353000, 'session_start', 'D50D60807F5347EB64EF0CD5A3D4C4CD'),
 ('1538605515191004, 'user_engagement', '2021-05-01 00:00:00');
 
-UPDATE database_datajourney.example_table SET int_col=int_col*2;
+UPDATE database_datajourney.example_table;
 ```
 
 Next, you will copy this file into the Cloud Storage bucket you created above, make the file accessible to your Cloud SQL service account, and import the SQL command into your database.
