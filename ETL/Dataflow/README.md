@@ -25,7 +25,7 @@ It is based on the open-source data processing framework Apache Beam.
 
 ## Challenge 4.2 
 First component of our dataflow ETL pipeline is a BigQuery Table named `dataflow`.
-The BigQuery Table should make use of the schema file `./datalayer/ecommerce_events_bq_schema.json`.
+The BigQuery Table should make use of the schema file: user_pseudo_id:STRING and event_count:INTEGER.
 The processing service will stream the transformed data into this table.
 
 <details><summary>Suggested Solution</summary>
@@ -33,7 +33,7 @@ The processing service will stream the transformed data into this table.
 Run this command
 
 ```
-bq mk --location=europe-west1 --table $GCP_PROJECT:dataflow_sink ./datalayer/ecommerce_events_bq_schema.json
+bq mk --location=europe-west1 --table $GCP_PROJECT:dataflow_sink ////ADD SCHEMA
 ```
 
 OR follow the documentation on how to [create a BigQuery table with schema through the console](https://cloud.google.com/bigquery/docs/tables#console).
@@ -43,7 +43,7 @@ OR follow the documentation on how to [create a BigQuery table with schema throu
 
 Second component is the connection between Pub/Sub topic and Dataflow job.
 
-Define a Pub/Sub subscription named `hyp_subscription_dataflow` that can serve this purpose.
+Define a Pub/Sub subscription named `dj_subscription_dataflow` that can serve this purpose.
 You will define the actual dataflow job in the next step.
 
 <details><summary>Hint</summary>
@@ -81,7 +81,7 @@ Finally, all we are missing is your Dataflow job to apply transformations, aggre
 You need to apply custom aggregations on the incoming data.
 That means you need to create a dataflow job based on a [flex-template](https://cloud.google.com/dataflow/docs/guides/templates/using-flex-templates).
 
-Find & examine the pipeline code in `.01_ingest_and_transform/11_challenge/beam/beam_processing.py`.
+Find & examine the pipeline code in `.ETL/Dataflow/dataflow_processing.py`.
 
 The pipeline is missing some code snippets. You will have to add two code snippets in `streaming_pipeline()`.
 
@@ -114,7 +114,7 @@ Check out some core beam transforms: (https://beam.apache.org/documentation/prog
 
 </details>
 
-## Building a container
+## Challenge 4.4
 
 To create a flex-template we first need to build the pipeline code as container in the Container Registry.
 
