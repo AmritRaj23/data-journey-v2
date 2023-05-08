@@ -42,11 +42,6 @@ Enable Google Cloud APIs
 ```
 gcloud services enable compute.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com dataflow.googleapis.com
 ```
-... moving to the challenge directory
-```
-cd data-journey/Data-Simulator
-```
-
 ... changing the project id in `./terraform.tfvars` to your own project id
 
 ... creating the PubSub Service Account. 
