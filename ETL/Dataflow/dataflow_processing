@@ -39,7 +39,7 @@ bucket = "gs://{}-gaming-events/tmp_dir".format(project)
         staging_location="%s/staging" % bucket,
         temp_location="%s/temp" % bucket,
         subnetwork='regions/europe-west1/subnetworks/terraform-network',
-        service_account_email='retailpipeline-hyp@{}.iam.gserviceaccount.com'.format(
+        service_account_email='data-journey-pipeline@{}.iam.gserviceaccount.com'.format(
             project),
         max_num_workers=1
     )
