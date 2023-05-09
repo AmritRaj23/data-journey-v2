@@ -13,6 +13,10 @@
 # limitations under the License.
 
 import json
+import time
+
+import config
+
 import apache_beam as beam
 from apache_beam import combiners
 from apache_beam.transforms import trigger
@@ -20,19 +24,16 @@ from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.io.gcp.pubsub import ReadFromPubSub
 from apache_beam.io.gcp.bigquery import BigQueryDisposition, WriteToBigQuery
 from apache_beam.runners import DataflowRunner
-from apache_beam.runners.interactive.interactive_runner import InteractiveRunner
-import apache_beam.runners.interactive.interactive_beam as ib
-import google.auth
 
 
 def streaming_pipeline(project, region):
 
-subscription = "projects/{}/subscriptions/dj_subscription_dataflow".format(project)
+    subscription = "projects/{}/subscriptions/dj_subscription_dataflow".format(project)
 
-bucket = "gs://{}-gaming-events/tmp_dir".format(project)
+    bucket = "gs://{}-gaming-events/tmp_dir".format(project)
 
-# Defining pipeline options.
-  options = PipelineOptions(
+    # Defining pipeline options.
+    options = PipelineOptions(
         streaming=True,
         project=project,
         region=region,
@@ -44,43 +45,42 @@ bucket = "gs://{}-gaming-events/tmp_dir".format(project)
         max_num_workers=1
     )
 
-# Defining pipeline.
-p = beam.Pipeline(DataflowRunner(), options=options)
+    # Defining pipeline.
+    p = beam.Pipeline(DataflowRunner(), options=options)
 
-# Receiving message from Pub/Sub & parsing json from string.
-json_message = (p
-                # Listining to Pub/Sub.
-                | "Read Topic" >> ReadFromPubSub(subscription=subscription)
-                # Parsing json from message string.
-                | "Parse json" >> beam.Map(json.loads)
-                )
+    # Receiving message from Pub/Sub & parsing json from string.
+    json_message = (p
+                    # Listining to Pub/Sub.
+                    | "Read Topic" >> ReadFromPubSub(subscription=subscription)
+                    # Parsing json from message string.
+                    | "Parse json" >> beam.Map(json.loads)
+                    )
 
-# Extracting user pseudo ids and event names.
-item_views = (json_message | "Map" >> beam.Map(lambda x: { "user_pseudo_id": x["user_pseudo_id"], "event_name": x["event_name"]})
+    # Extracting user pseudo ids and event names.
+    extract = (json_message | "Map" >> beam.Map(lambda x: { "user_pseudo_id": x["user_pseudo_id"], "event_name": x["event_name"]}))
 
-# Appying windowing funtion
-fixed_windowed_items = (json_message
+    # Appying windowing funtion
+    fixed_windowed_items = (extract
                           | "CountEventsPerMinute" >> beam.WindowInto(beam.window.FixedWindows(60),
                                                                 trigger=trigger.AfterWatermark(early=trigger.AfterProcessingTime(60), late=trigger.AfterCount(1)),
                                                                 accumulation_mode=trigger.AccumulationMode.DISCARDING)
                        )
 
-# Calculating numbers of events per user in a minute
-
-number_events =  ( fixed_windowed_items | "Read" >> beam.Map(lambda x: (x["user_pseudo_id"], 1))
+    # Calculating numbers of events per user in a minute
+    number_events =  (fixed_windowed_items | "Read" >> beam.Map(lambda x: (x["user_pseudo_id"], 1))
                                         | "Grouping users" >> beam.GroupByKey()
                                         | "Count" >> beam.CombineValues(sum)
                                         | "Map to dictionaries" >> beam.Map(lambda x: {"user_pseudo_id": x[0], "event_count": int(x[1])})) 
 
-# Writing summed values to BigQuery
-dataflow_schema = "user__pseudo_id:STRING, event_count:INTEGER"
-dataflow__table = "{}: dataflow_sink".format(project)
+    # Writing summed values to BigQuery
+    dataflow_schema = "user_pseudo_id:STRING, event_count:INTEGER"
+    dataflow_table = "{}:data_journey.dataflow".format(project)
 
-write = number_events| "Write Summed Values To BigQuery" >> WriteToBigQuery(table=dataflow__table, schema=dataflow_schema,
-                                                                                create_disposition=BigQueryDisposition.CREATE_IF_NEEDED,
-                                                                                write_disposition=BigQueryDisposition.WRITE_APPEND)
+    number_events| "Write Summed Values To BigQuery" >> WriteToBigQuery(table=dataflow_table, schema=dataflow_schema,
+                                                                        create_disposition=BigQueryDisposition.CREATE_IF_NEEDED,
+                                                                        write_disposition=BigQueryDisposition.WRITE_APPEND)
                                                                               
-return p.run()
+    return p.run()
 
 if __name__ == '__main__':
     GCP_PROJECT = config.project_id
