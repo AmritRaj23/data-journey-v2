@@ -33,7 +33,8 @@ The processing service will stream the transformed data into this table.
 Run this command
 
 ```
-bq mk --location=europe-west1 --table $GCP_PROJECT:dataflow_sink ////ADD SCHEMA
+bq --location=$GCP_REGION mk --dataset $GCP_PROJECT:data_journey    
+bq mk --location=$GCP_REGION --table $GCP_PROJECT:data_journey.dataflow user_pseudo_id:STRING,event_count:INTEGER
 ```
 
 OR follow the documentation on how to [create a BigQuery table with schema through the console](https://cloud.google.com/bigquery/docs/tables#console).
