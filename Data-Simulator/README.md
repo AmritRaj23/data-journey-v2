@@ -161,7 +161,7 @@ Then save the endpoint URL for your service as environment variable `$ENDPOINT_U
 To deploy a new Cloud Run service from your container you can use:
 
 ```
-gcloud run deploy hyp-run-service-pubsub-proxy --image gcr.io/$GCP_PROJECT/pubsub-proxy:latest --region=$GCP_REGION --allow-unauthenticated
+gcloud run deploy dj-run-service-pubsub-proxy --image gcr.io/$GCP_PROJECT/pubsub-proxy:latest --region=$GCP_REGION --allow-unauthenticated
 ```
 
 Enter the displayed URL of your endpoint in `./config_env.sh` & reset the environment variables.
