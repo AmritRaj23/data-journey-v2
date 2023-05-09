@@ -7,10 +7,10 @@ WORKDIR ${WORKDIR}
 # Copy local code to the container image.
 COPY . ./
 COPY ./requirements.txt ./
-COPY ./beam_processing.py ./
+COPY ./dataflow_processing.py ./
 
 # Flex Template ENV Vars
-ENV FLEX_TEMPLATE_PYTHON_PY_FILE="${WORKDIR}/beam_processing.py"
+ENV FLEX_TEMPLATE_PYTHON_PY_FILE="${WORKDIR}/dataflow_processing.py"
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="${WORKDIR}/requirements.txt"
 
 # Install requirements
