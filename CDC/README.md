@@ -22,7 +22,7 @@ What you’ll do:
 
 ```
 git clone https://github.com/AmritRaj23/data-journey-v2.git
-cd data-journey/CDC
+cd data-journey-v2/CDC
 ```
 
 ## Set-up Cloud Environment
