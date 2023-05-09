@@ -123,14 +123,13 @@ Build the beam folder content as container named `beam-processing-flex-template`
 
 <details><summary>Suggested Solution</summary>
 
-Back to main directory:
-```
-cd ..
+source config_env.sh
+cd data-journey-v2/ETL/Dataflow
 ```
 
 Run
 ```
-gcloud builds submit $DATAFLOW_TEMPLATE --tag gcr.io/$GCP_PROJECT/beam-processing-flex-template
+gcloud builds submit --tag gcr.io/$GCP_PROJECT/beam-processing-flex-template
 ```
 
 </details>
