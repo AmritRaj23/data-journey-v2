@@ -3,7 +3,7 @@
 User retention can be a major challenge across industries. To retain a larger percentage of users after their first use of an app, developers can take steps to motivate and incentivize certain users to return. But to do so, developers need to identify the propensity of any specific user returning after the first 24 hours. 
 In this hackathon, we will discuss how you can use BigQuery ML to run propensity models on Google Analytics 4 data from an example gaming app data to determine the likelihood of specific users returning to your app.
 
-![architecture](/assets/overview.png)
+![architecture](assets/overview.png)
 
 ## Lab 1
 *  Pre-process the raw event data in views 
