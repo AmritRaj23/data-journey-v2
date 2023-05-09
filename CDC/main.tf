@@ -25,7 +25,6 @@ terraform {
 
 provider "google" {
   project = var.project_id
-  region  = var.gcp_region
 }
 
 resource "google_service_account" "datastream_access" {
@@ -41,7 +40,7 @@ resource "google_project_iam_member" "datastream_admin" {
 resource "google_sql_database_instance" "master" {    
     name = "mysql"
     database_version = "MYSQL_8_0"
-    region = "us-central1"
+    region = "europe-west1"
     deletion_protection =  "false"
     settings {
         tier = "db-n1-standard-2"
@@ -53,23 +52,23 @@ resource "google_sql_database_instance" "master" {
             ipv4_enabled = true
             authorized_networks { 
                 name = "net1"
-                value = "34.72.28.29"
+                value = "35.187.27.174"
             }
             authorized_networks {
                 name = "net2"
-                value = "34.67.234.134"
+                value = "104.199.6.64"
             }
             authorized_networks {
                 name = "net3"
-                value = "34.67.6.157"
+                value = "35.205.33.30"
             }
             authorized_networks {
                 name = "net4"
-                value = "34.72.239.218"
+                value = "34.78.213.130"
             }
             authorized_networks {
                 name = "net5"
-                value = "34.71.242.81"
+                value = "35.205.125.111"
             }
         }
     }
@@ -83,6 +82,6 @@ password = "password123"
 }
 resource "google_storage_bucket" "gcs_bucket" {
     name = "${var.project_id}"
-    location = "us-central1" 
+    location = "europe-west1" 
     force_destroy = true
 }
