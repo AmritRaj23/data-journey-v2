@@ -102,7 +102,7 @@ terraform apply -var-file terraform.tfvars
 This will show you a plan of everything that will be created and then the following notification where you should enter `yes` to proceed:
 
 ```
-Plan: 7 to add, 0 to change, 0 to destroy.
+Plan: 5 to add, 0 to change, 0 to destroy.
 
 Do you want to perform these actions?
   Terraform will perform the actions described above.
@@ -120,7 +120,7 @@ google_compute_network.vpc_network: Creating...
 .
 .
 .
-Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
 ```
 
 ## Import a SQL file into MySQL
@@ -132,16 +132,15 @@ CREATE DATABASE IF NOT EXISTS database_datajourney;
 USE database_datajourney;
 
 CREATE TABLE IF NOT EXISTS database_datajourney.example_table (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-event_timestamp INTEGER,
-event_name STRING,
-user_pseudo_id STRING
+event_timestamp timestamp,
+event_name varchar(255),
+user_pseudo_id varchar(255)
 );
 
-INSERT INTO database_datajourney.example_table (text_col, int_col, created_at) VALUES
-(1538605526387002, 'level_complete_quickplay', 'D50D60807F5347EB64EF0CD5A3D4C4CD'),
-(1538605456440005,'screen_view', 'D50D60807F5347EB64EF0CD5A3D4C4CD'),
-(1538605649314017, 'post_score', '2D50D60807F5347EB64EF0CD5A3D4C4CD');
+INSERT INTO database_datajourney.example_table (event_timestamp, event_name, user_pseudo_id) VALUES
+(153861, 'level_complete_quickplay', 'D50D60807F5347EB64EF0CD5A3D4C4CD'),
+(153862,'screen_view', 'D50D60807F5347EB64EF0CD5A3D4C4CD'),
+(153863, 'post_score', '2D50D60807F5347EB64EF0CD5A3D4C4CD');
 ```
 
 Next, you will copy this file into the Cloud Storage bucket you created above, make the file accessible to your Cloud SQL service account, and import the SQL command into your database.
