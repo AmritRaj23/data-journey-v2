@@ -33,7 +33,7 @@ The processing service will stream the transformed data into this table.
 Run this command
 
 ```
-bq --location=$GCP_REGION mk --dataset $GCP_PROJECT:data_journey    
+bq --location=$GCP_REGION mk --dataset $GCP_PROJECT:data_journey
 bq mk --location=$GCP_REGION --table $GCP_PROJECT:data_journey.dataflow user_pseudo_id:STRING,event_count:INTEGER
 ```
 
