@@ -121,8 +121,10 @@ To create a flex-template we first need to build the pipeline code as container 
 
 Build the beam folder content as container named `beam-processing-flex-template` to your Container Registry.
 
+Make sure to update config_env.sh with your variables.
+
 <details><summary>Suggested Solution</summary>
-```
+```    
 source config_env.sh
 cd data-journey-v2/ETL/Dataflow
 ```
