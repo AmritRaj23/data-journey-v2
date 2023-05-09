@@ -18,30 +18,14 @@ terraform {
   required_providers {
     google = {
       source = "hashicorp/google"
-      version = "4.31.0"
+      version = "4.32.0"
     }
   }
 }
 
 provider "google" {
-
-}
-
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"  
-}
-
-resource "google_compute_firewall" "vpc_network_firewall" {
-  name    = "firewall"
-  
-  network = google_compute_network.vpc_network.name
-  
-  source_service_accounts = ["${google_service_account.datastream_access.email}"]
-
-  allow {
-    protocol = "tcp"
-    ports    = ["12345", "12346"]
-  }
+  project = var.project_id
+  region  = var.gcp_region
 }
 
 resource "google_service_account" "datastream_access" {
