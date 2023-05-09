@@ -24,3 +24,6 @@ In this hackathon, we will discuss how you can use BigQuery ML to run propensity
 *  Deploy our registered model to a new endpoint
 *  Deploy another updated model to the same endpoint (traffic split 50%)
 *  Enable Prediction data drift in our endpoint for submitting a skewed payload 
+
+## Lab 4
+*  Orchestrate Lab 2 and Lab 3 using Vertex Pipelines
