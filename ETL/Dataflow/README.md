@@ -128,14 +128,27 @@ The code should look something like this:
 </details>
 
 <details><summary>Suggested Solution: Data Windowing</summary>
-    
 
-
+The code should look something like this:    
+```
+    fixed_windowed_items = (extract
+                          | "CountEventsPerMinute" >> beam.WindowInto(beam.window.FixedWindows(60),
+                                                                trigger=trigger.AfterWatermark(early=trigger.AfterProcessingTime(60), late=trigger.AfterCount(1)),
+                                                                accumulation_mode=trigger.AccumulationMode.DISCARDING)
+                       )
+```
 
 </details>
 
 <details><summary>Suggested Solution: Counting the events per user</summary>
     
+The code should look something like this:    
+```
+    number_events =  (fixed_windowed_items | "Read" >> beam.Map(lambda x: (x["user_pseudo_id"], 1))
+                                        | "Grouping users" >> beam.GroupByKey()
+                                        | "Count" >> beam.CombineValues(sum)
+                                        | "Map to dictionaries" >> beam.Map(lambda x: {"user_pseudo_id": x[0], "event_count": int(x[1])})) 
+```
     
 </details>
     
