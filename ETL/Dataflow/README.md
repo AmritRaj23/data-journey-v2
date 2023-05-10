@@ -123,6 +123,7 @@ Make sure to update config_env.sh with your variables.
 <details><summary>Suggested Solution</summary>
 ```    
 source config_env.sh
+
 cd data-journey-v2/ETL/Dataflow
 ```
 
