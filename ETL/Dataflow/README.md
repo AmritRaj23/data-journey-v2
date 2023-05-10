@@ -171,7 +171,6 @@ Run
 ```
 gcloud builds submit --tag gcr.io/$GCP_PROJECT/beam-processing-flex-template
 ```
-
 </details>
 
 
