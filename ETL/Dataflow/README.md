@@ -14,7 +14,9 @@ It is based on the open-source data processing framework Apache Beam.
 
 ## Challenge 4.1 
 First component of our dataflow ETL pipeline is a BigQuery Table named `dataflow`, and data_journey dataset if not previously created.
+
 The BigQuery Table should make use of the schema file: user_pseudo_id:STRING and event_count:INTEGER.
+
 The processing service will stream the transformed data into this table.
 
 <details><summary>Hint</summary>
