@@ -12,7 +12,7 @@ It is based on the open-source data processing framework Apache Beam.
 
 </details>
 
-## Challenge 4.1 
+## Challenge 1.1 
 First component of our dataflow ETL pipeline is a BigQuery Table named `dataflow`, and data_journey dataset if not previously created.
 
 The BigQuery Table should make use of the schema file: user_pseudo_id:STRING and event_count:INTEGER.
@@ -71,7 +71,7 @@ read how it can be [defined via the console](https://cloud.google.com/pubsub/doc
 
 
 
-## Challenge 4.2
+## Challenge 1.2
 Finally, all we are missing is your Dataflow job to apply transformations, aggregations and connect Pub/Sub queue with BigQuery Sink.
 
 [Templates](https://cloud.google.com/dataflow/docs/concepts/dataflow-templates) let you create Dataflow jobs based on pre-existing code. That makes it quick to set up and reusable.
@@ -112,7 +112,7 @@ Check out some core beam transforms: (https://beam.apache.org/documentation/prog
 
 </details>
 
-## Challenge 4.3
+## Challenge 1.3
 
 To create a flex-template we first need to build the pipeline code as container in the Container Registry.
 
@@ -155,7 +155,7 @@ gcloud dataflow flex-template build gs://$GCP_PROJECT-gaming-events/df_templates
 ```
 </details>
 
-## Challenge 4.4
+## Challenge 1.4
 
 Run a Dataflow job based on the flex-template you just created.
 
