@@ -8,7 +8,7 @@ git clone https://github.com/AmritRaj23/data-journey-v2
 cd data-journey-v2/Data-Simulator
 ```
 
-Enter your GCP Project ID in `./config_env.sh` and setting all necessary environment variables.
+Enter your GCP Project ID in `./config_env.sh` and set all necessary environment variables.
 
 ```
 source config_env.sh
@@ -69,7 +69,7 @@ This workshop uses [this public BigQuery dataset](https://console.cloud.google.c
 
 Here is how the data looks like.
 
-Each row in the dataset is a unique event, which can contains nested fields for event parameters.
+Each row in the dataset is a unique event, which can contain nested fields for event parameters.
 
 ![events](../rsc/events.png)
 
@@ -128,7 +128,7 @@ You created a new proxy server container repo.
 
 Next, create a new Cloud Run Service named `dj-run-service-pubsub-proxy` based on the container you built.
 
-Then save the endpoint URL for your service as environment variable `$ENDPOINT_URL`.
+Then save the endpoint URL for your service as an environment variable `$ENDPOINT_URL`.
 
 
 To deploy a new Cloud Run service from your container you can use:
