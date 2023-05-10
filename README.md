@@ -10,7 +10,7 @@ Every row in the dataset is an event, with various characteristics relevant to t
 
 While Google Analytics logs many types of events already by default, developers can also customize the types of events they also wish to log.
 
-![DJ](dj-achitecture.png)
+![DJ](dj-architecture.png)
 
 
 By the end of this workshop, you will learn how to:
