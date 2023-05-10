@@ -14,7 +14,7 @@ User retention can be a major challenge for mobile game developers.
 
 The goal of this workshop is to develop an ML propensity model to determine the likelihood of users returning to your app.
 
-![DJ](data-journey-architecture.png)
+![DJ](./rsc/data-journey-architecture.png)
 
 
 By the end of this workshop, you will learn how to:
