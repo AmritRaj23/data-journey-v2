@@ -102,7 +102,7 @@ But of course you could use any other container repository.
 The repository `Data-Simulator/cloud-run-pubsub-proxy` contains the complete proxy code.
 
 Create a new container repository named `pubsub-proxy`.
-Build the container described by `Data-Simulator/Dockerfile` in it.
+Build the container described by `Data-Simulator/cloud-run-pubsub-proxy/Dockerfile` in it.
 
 ```
 gcloud builds submit $RUN_PROXY_DIR --tag gcr.io/$GCP_PROJECT/pubsub-proxy
