@@ -10,7 +10,11 @@ Every row in the dataset is an event, with various characteristics relevant to t
 
 While Google Analytics logs many types of events already by default, developers can also customize the types of events they also wish to log.
 
-![DJ](dj-architecture.png)
+User retention can be a major challenge for mobile game developers.
+
+The goal of this workshop is to develop an ML propensity model to determine the likelihood of users returning to your app.
+
+![DJ](data-journey-architecture.png)
 
 
 By the end of this workshop, you will learn how to:
