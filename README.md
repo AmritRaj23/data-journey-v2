@@ -1,6 +1,6 @@
 # Welcome to Cloud Native Data Journey with Google Cloud!
 
-In this repository you will fins seried of demos and labs how to build end-to-end data pipeline, from collection, over transformation and up to activation of the data.
+In this repository you will find series of demos and labs how to build end-to-end data pipeline, from collection, over transformation and up to activation of the data.
 
 We will be using raw event data from a real mobile gaming app called Flood It, that originates from Google Analytics for Firebase.
 
@@ -20,9 +20,9 @@ The goal of this workshop is to develop an ML propensity model to determine the 
 By the end of this workshop, you will learn how to:
 
 - Stream the raw event data into messaging queue (/Data-Simulator)
-- Transform the data using different tranformation tools (/ETL)
-- Tranform the data once it is loaded into BigQuery (/ELT)
-- Synchronize the data in MySQL adn BigQuery (/CDC)
+- Transform the data using different transformation tools (/ETL)
+- Transform the data once it is loaded into BigQuery (/ELT)
+- Synchronize the data in MySQL and BigQuery (/CDC)
 - Train ML model Using BigQueryML and automate your ML workflow using Vertex ML Pipelines (/ML)  
 
 # Good luck and have fun! 
