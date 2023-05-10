@@ -1,4 +1,4 @@
-# Apply transformation, apply aggregation & bring data to BigQuery as efficient as possible
+# Apply transformation, apply aggregation & bring data to BigQuery using Dataflow
 Cloud Run works smooth to apply simple data transformations. On top of that it scales to 0. So why not stop right there?
 
 Let's think one step further. Imagine for example you need to apply aggregations, not only transformations. 
@@ -7,26 +7,21 @@ For example, you might need to support a real time dashboard to display the most
 For extremely latency sensitive applications, and cases in which aggregations or disstributed compute make the transformations stateful neither ELT nor Cloud Run will do the job.
 This is where [Apache Beam](https://beam.apache.org/documentation/basics/) comes to shine!
 
-## Challenge 4.1
-Based on your current GCP and non-GCP knowledge.
-How would the ideal architecture to satisfy above requirements look like?
-
-Don't start building just yet, lets discuss the architecture ideas first.
-
-<details><summary>Suggested Solution</summary>
-
 Dataflow is a great tool to integrate into your pipeline for high volume data streams with complex transformations and aggregations.
 It is based on the open-source data processing framework Apache Beam.
 
-![Hack Your Pipe architecture](../../rsc/dataflow.png)
-
 </details>
 
-
-## Challenge 4.2 
+## Challenge 4.1 
 First component of our dataflow ETL pipeline is a BigQuery Table named `dataflow`.
 The BigQuery Table should make use of the schema file: user_pseudo_id:STRING and event_count:INTEGER.
 The processing service will stream the transformed data into this table.
+
+<details><summary>Hint</summary>
+
+The [BigQuery documentation](https://cloud.google.com/bigquery/docs/tables) might be helpful to follow.
+
+</details>
 
 <details><summary>Suggested Solution</summary>
 
@@ -74,7 +69,7 @@ read how it can be [defined via the console](https://cloud.google.com/pubsub/doc
 
 
 
-## Challenge 4.3
+## Challenge 4.2
 Finally, all we are missing is your Dataflow job to apply transformations, aggregations and connect Pub/Sub queue with BigQuery Sink.
 
 [Templates](https://cloud.google.com/dataflow/docs/concepts/dataflow-templates) let you create Dataflow jobs based on pre-existing code. That makes it quick to set up and reusable.
@@ -115,7 +110,7 @@ Check out some core beam transforms: (https://beam.apache.org/documentation/prog
 
 </details>
 
-## Challenge 4.4
+## Challenge 4.3
 
 To create a flex-template we first need to build the pipeline code as container in the Container Registry.
 
@@ -158,7 +153,7 @@ gcloud dataflow flex-template build gs://$GCP_PROJECT-gaming-events/df_templates
 ```
 </details>
 
-## Challenge 4.5
+## Challenge 4.4
 
 Run a Dataflow job based on the flex-template you just created.
 
