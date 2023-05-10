@@ -12,6 +12,10 @@ It is based on the open-source data processing framework Apache Beam.
 
 </details>
 
+For the challenges below lets reference the working directory:
+
+```cd ETL/Dataflow```
+
 ## Challenge 1.1 
 First component of our dataflow ETL pipeline is a BigQuery Table named `dataflow`, and data_journey dataset if not previously created.
 
