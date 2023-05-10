@@ -84,7 +84,7 @@ Here is how the data looks like.
 
 Each row in the dataset is a unique event, which can containr nested fields for event parameters.
 
-![events](./rsc/events.png)
+![events](../../rsc/events.png)
 
 </details>
 
