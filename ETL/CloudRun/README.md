@@ -10,6 +10,12 @@ But ETL tools are maintenance overhead. In our example, you don't want to manage
 
 That means your pipeline should scale down to 0 when unused or up to whatever is needed to cope with a higher load.
 
+To start off, let's reference the working directory:
+
+```
+cd ETL/CloudRun
+```
+
 ## STEP 1
 
 First component of our lightweight ETL pipeline is a BigQuery Table named `cloud_run`.
@@ -32,30 +38,10 @@ Second, let's set up your Cloud Run Processing Service. `./ETL/Cloud Run` contai
 Inspect the `Dockerfile` to understand how the container will be build.
 
 `main.py` defines the web server that handles the incoming data points. Inspect `main.py` to understand the web server logic.
-As you can see `main.py` is missing two code snippets.
 
-Complete the web server with the BigQuery client and Client API call to insert rows to BigQuery from a json object.
-Use the BigQuery Python SDK.
-
-Before you start coding replace the required variables in `config.py` so you can access them safely in `main.py`.
-
-Define the [BigQuery Python Client](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.client.Client#google_cloud_bigquery_client_Client_insert_rows_json) as followed:
-```
-client = bigquery.Client(project=config.project_id, location=config.location)
-```
-
-Insert rows form JSON via [the Client's insert_rows_json method](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.client.Client#google_cloud_bigquery_client_Client_insert_rows_json):
-```
-errors = client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
-```
-
-</details>
+Make sure to replace the required variables in `config.py` so you can access them safely in `main.py`.
 
 Once the code is completed build the container from `./ETL/Cloud Run` into a new [Container Repository] (ttps://cloud.google.com/artifact-registry/docs/overview) named `data-processing-service`.
-
-```
-cd ..
-```
 
 ```
 gcloud builds submit $RUN_PROCESSING_DIR --tag gcr.io/$GCP_PROJECT/data-processing-service
@@ -78,7 +64,7 @@ Only listing images in gcr.io/<project-id>. Use --repository to list images in o
 
 ## STEP 3
 
-As you did before, deploy a new cloud run processing service based on the container you just build to your Container Registry.
+Next step is to deploy a new cloud run processing service based on the container you just build to your Container Registry.
 
 ```
 gcloud run deploy dj-run-service-data-processing --image gcr.io/$GCP_PROJECT/data-processing-service:latest --region=europe-west1 --allow-unauthenticated
@@ -87,7 +73,8 @@ gcloud run deploy dj-run-service-data-processing --image gcr.io/$GCP_PROJECT/dat
 </details>
 
 
-## Challenge 3.5
+## Step 4
+
 Define a Pub/Sub subscription named `dj-subscription_cloud_run` that can forward incoming messages to an endpoint.
 
 You will need to create a Push Subscription to the Pub/Sub topic we already defined.
