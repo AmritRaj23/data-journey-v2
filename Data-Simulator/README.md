@@ -1,44 +1,32 @@
-# Data Ingestion
-
-You are an e-commerce start-up. Your web-shop app is the heart of your business.
-
-Your company decided to improve engagement and drive up revenue through data-driven insights.
-
-You already have google tag manager set up for activity tracking. Great! Only the data pipeline is missing.
-
-As Data Engineer you want to set up a solution to collect and analyze user interactions as shown below.  
-
-![Hack Your Pipe architecture](../../rsc/hyp_architecture.png)
-
 ## Environment Preparation
 
 Before you jump into the challenges make sure you GCP project is prepared by: 
 
-... cloning the github repo
+Clone the github repo.
 ```
 git clone https://github.com/AmritRaj23/data-journey-v2
 cd data-journey-v2/Data-Simulator
 ```
 
-... entering your GCP Project ID in `./config_env.sh` & setting all necessary environment variables.
+Enter your GCP Project ID in `./config_env.sh` & setting all necessary environment variables.
 
 ```
 source config_env.sh
 ```
 
-Set the default GCP project
+Set the default GCP project.
 
 ```
 gcloud config set project $GCP_PROJECT
 ```
 
-... setting your compute zone.
+Set your compute zone.
 
 ```
 gcloud config set compute/zone $GCP_REGION
 
 ```
-Enable Google Cloud APIs
+Enable Google Cloud APIs.
 ```
 gcloud services enable compute.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com dataflow.googleapis.com
 ```
@@ -75,50 +63,33 @@ constraints/storage.uniformBucketLevelAccess
 constraints/iam.allowedPolicyMemberDomains
 ``` -->
 
-Create bucket to store sample data source:
+Create bucket to store sample data source.
 ```
 gsutil mb -l $GCP_REGION gs://$BUCKET
 ```
 
-Create sample data source:
+Create sample data source.
 ```
 bq extract --destination_format NEWLINE_DELIMITED_JSON 'firebase-public-project:analytics_153293282.events_20181003' gs://$BUCKET/$FILE
 ```
 
 ## Building Data Simulator:
 
-You are using Google Tag Manager for the respective ad tracking.
-
-Your data stream is running. You need to make sure that incoming messages are ingested into the cloud reliably.
-
-How would you ingest the data reliably based on your current knowledge? Which GCP and/or non-GCP tools would you use? 
-For now focus on the ingestion part of things.
-How would you collect data points and bring them into your cloud environment reliably?
-
-No implementation needed yet. Please solely think about the architecture.
-
-<details><summary>Hint</summary>
-
-[Pub/Sub](https://cloud.google.com/pubsub/docs/overview) might be useful for this.
-
-</details>
-
-
-<details><summary>Suggested Solution</summary>
-
 We will track user events on our website using [Google Tag Manager](https://developers.google.com/tag-platform/tag-manager).
-To receive Google Tag manager events in our cloud environment we will use [Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run) to set up a proxy service.
-This proxy serves as public facing endpoint which can for example be set up as [custom tag](https://support.google.com/tagmanager/answer/6107167?hl=en) in Google Tag Manager.
+To receive events in our cloud environment we will use [Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run) to set up a proxy service.
 
 To distribute the collected data points for processing you will use a [Pub/Sub](https://cloud.google.com/pubsub/docs/overview) topic.
 
-Our starting point will look something like this:
+Here is how the data looks like.
 
-![Hack Your Pipe architecture](../../rsc/ingestion.png)
+Each row in the dataset is a unique event, which can containr nested fields for event parameters.
+
+![events](../../rsc/events.png)
 
 </details>
 
-## Step 1: Building a container
+### Step 1: Building a container
+
 [Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run) allows to set up serverless services based on a container we define.
 Thus, the one of the fastest, most scalable and cost-efficient ways to build our proxy is Cloud Run.
 
@@ -128,10 +99,10 @@ We need to build a container with the code for our proxy server.
 [Cloud Container Registry](https://cloud.google.com/artifact-registry/docs/overview) is a convenient choice for a GCP artifact repository.
 But of course you could use any other container repository.
 
-The repository `01_ingest_and_transform/11_challenge/cloud-run-pubsub-proxy` contains the complete proxy code.
+The repository `Data-Simulator/cloud-run-pubsub-proxy` contains the complete proxy code.
 
 Create a new container repository named `pubsub-proxy`.
-Build the container described by `01_ingest_and_transform/11_challenge/cloud-run-pubsub-proxy/Dockerfile` in it.
+Build the container described by `Data-Simulator/Dockerfile` in it.
 
 ```
 gcloud builds submit $RUN_PROXY_DIR --tag gcr.io/$GCP_PROJECT/pubsub-proxy
@@ -151,9 +122,10 @@ Only listing images in gcr.io/<project-id>. Use --repository to list images in o
 
 </details>
 
-## Step 2:
+### Step 2:
 You created a new proxy server container repo.
-Next, create a new Cloud Run Service named `hyp-run-service-pubsub-proxy` based on the container you built.
+
+Next, create a new Cloud Run Service named `dj-run-service-pubsub-proxy` based on the container you built.
 
 Then save the endpoint URL for your service as environment variable `$ENDPOINT_URL`.
 
@@ -173,11 +145,10 @@ source config_env.sh
 </details>
 
 
-## Step 3: 
+### Step 3: 
 Next, a messaging queue with [Pub/Sub](https://cloud.google.com/pubsub/docs/overview) will allow us to collect all messages centrally to then distribute them for processing.
 
 Set up a Pub/Sub topic named `dj-pubsub-topic`.
-
 
 Use this command in the Cloud Shell to create the topic via command line.
 
@@ -202,6 +173,3 @@ After a minute or two validate that your solution is working by inspecting the [
 Of course the topic does not have any consumers yet. Thus, you should find that messages are queuing up.
 
 By default you should see around .5 messages per second streaming into the topic.
-![Pub/Sub Metrics](../../rsc/pubsub_metrics.png)
-
-
