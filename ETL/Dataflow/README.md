@@ -12,7 +12,7 @@ It is based on the open-source data processing framework Apache Beam.
 
 </details>
 
-For the challenges below lets reference the working directory:
+For the challenges below let's reference the working directory:
 
 ```cd ETL/Dataflow```
 
@@ -85,14 +85,14 @@ That means you need to create a dataflow job based on a [flex-template](https://
 
 Find & examine the pipeline code in `.ETL/Dataflow/dataflow_processing.py`.
 
-The pipeline is missing some code snippets. You will have to add two code snippets in `streaming_pipeline()`.
+The pipeline is missing some code snippets. You will have to add three code snippets in `streaming_pipeline()`.
 
 You need to design a pipeline that calculates number of events per user per 1 minute (they don't have to be unique).
 Ideally, we would like to see per one 1 hour, but for demonstration purposese we will shorten to 1 minute.
 
 The aggregated values should be written into your BigQuery table.
 
-Before you start coding replace the required variables in `config.py` so you can access them safely in `beam_processing.py`.
+Before you start coding replace the required variables in `config.py` so you can access them safely in `dataflow_processing.py`.
 
 <details><summary>Hint: Read from PubSub Transform</summary>
 
@@ -114,8 +114,31 @@ Check out some core beam transforms: (https://beam.apache.org/documentation/prog
 
 </details>
 
+<details><summary>Suggested Solution: Read from PubSub Transform</summary>
+
+The code should look something like this:
+```
+    json_message = (p
+                    # Listining to Pub/Sub.
+                    | "Read Topic" >> ReadFromPubSub(subscription=subscription)
+                    # Parsing json from message string.
+                    | "Parse json" >> beam.Map(json.loads)
+```
+
 </details>
 
+<details><summary>Suggested Solution: Data Windowing</summary>
+    
+
+
+
+</details>
+
+<details><summary>Suggested Solution: Counting the events per user</summary>
+    
+    
+</details>
+    
 ## Challenge 1.3
 
 To create a flex-template we first need to build the pipeline code as container in the Container Registry.
