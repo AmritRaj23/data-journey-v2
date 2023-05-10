@@ -1,4 +1,4 @@
-# Apply transformation, apply aggregation & bring data to BigQuery using Dataflow
+# Apply transformation, aggregation & bring data to BigQuery using Dataflow
 Cloud Run works smooth to apply simple data transformations. On top of that it scales to 0. So why not stop right there?
 
 Let's think one step further. Imagine for example you need to apply aggregations, not only transformations. 
