@@ -30,15 +30,15 @@ Enable Google Cloud APIs.
 ```
 gcloud services enable compute.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com dataflow.googleapis.com
 ```
-... changing the project id in `./terraform.tfvars` to your own project id
+Change the project id in `./terraform.tfvars` to your own project id
 
-... creating the PubSub Service Account. 
+Change the PubSub Service Account. 
 
 ```
 gcloud beta services identity create --project $GCP_PROJECT --service pubsub
 ```
 
-... building the basic permissions & networking setup via terraform apply.
+Build the basic permissions & networking setup via terraform apply.
 
 ```
 terraform init
