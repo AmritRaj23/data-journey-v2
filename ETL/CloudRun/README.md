@@ -13,13 +13,13 @@ That means your pipeline should scale down to 0 when unused or up to whatever is
 ## STEP 1
 
 First component of our lightweight ETL pipeline is a BigQuery Table named `cloud_run`.
-The BigQuery Table should make use of the schema file `./datalayer/ecommerce_events_bq_schema.json`.
+The BigQuery Table should make use of the schema file `./schema.json`.
 The processing service will stream the transformed data into this table.
 
 Run this command
 
 ```
-bq mk --location=europe-west1 --table $GCP_PROJECT:data_journey  // ADD SCHEMA
+bq mk --location=europe-west1 --table $GCP_PROJECT:data_journey.cloud run ./schema.json
 ```
 
 OR follow the documentation on how to [create a BigQuery table with schema through the console](https://cloud.google.com/bigquery/docs/tables#console).
