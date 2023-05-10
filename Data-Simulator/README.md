@@ -8,7 +8,7 @@ git clone https://github.com/AmritRaj23/data-journey-v2
 cd data-journey-v2/Data-Simulator
 ```
 
-Enter your GCP Project ID in `./config_env.sh` & setting all necessary environment variables.
+Enter your GCP Project ID in `./config_env.sh` and setting all necessary environment variables.
 
 ```
 source config_env.sh
@@ -30,7 +30,7 @@ Enable Google Cloud APIs.
 ```
 gcloud services enable compute.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com dataflow.googleapis.com
 ```
-Change the project id in `./terraform.tfvars` to your own project id
+Change the project id in `./terraform.tfvars` to your own project id.
 
 Change the PubSub Service Account. 
 
@@ -63,30 +63,31 @@ constraints/storage.uniformBucketLevelAccess
 constraints/iam.allowedPolicyMemberDomains
 ``` -->
 
+## Building Data Simulator:
+
+This workshop uses [this public BigQuery dataset](https://console.cloud.google.com/bigquery?p=firebase-public-project&d=analytics_153293282&t=events_20181003&page=table), that contains raw event data from a real mobile gaming app called Flood It! ([Android app](https://play.google.com/store/apps/details?id=com.labpixies.flood), [iOS app](https://itunes.apple.com/us/app/flood-it!/id476943146?mt=8)). The data schema originates from Google Analytics for Firebase, but is the same schema as Google Analytics 4.
+
+Here is how the data looks like.
+
+Each row in the dataset is a unique event, which can contains nested fields for event parameters.
+
+![events](../rsc/events.png)
+
+</details>
+
 Create bucket to store sample data source.
 ```
 gsutil mb -l $GCP_REGION gs://$BUCKET
 ```
 
-Create sample data source.
+Create sample data source, by extracting the JSON from the public dataset that we will later use for streaming simulation.
 ```
 bq extract --destination_format NEWLINE_DELIMITED_JSON 'firebase-public-project:analytics_153293282.events_20181003' gs://$BUCKET/$FILE
 ```
 
-## Building Data Simulator:
-
-We will track user events on our website using [Google Tag Manager](https://developers.google.com/tag-platform/tag-manager).
 To receive events in our cloud environment we will use [Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run) to set up a proxy service.
 
 To distribute the collected data points for processing you will use a [Pub/Sub](https://cloud.google.com/pubsub/docs/overview) topic.
-
-Here is how the data looks like.
-
-Each row in the dataset is a unique event, which can containr nested fields for event parameters.
-
-![events](../rsc/events.png)
-
-</details>
 
 ### Step 1: Building a container
 
