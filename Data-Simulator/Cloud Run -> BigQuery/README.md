@@ -12,22 +12,6 @@ Data users will worry about the processing.
 
 To start out we aim for rapid iteration. We plan using BigQuery as Data Lakehouse - Combining Data Warehouse and Data Lake).
 
-With your current knowledge, which would be the most lightweight architecture to support this use case?
-
-Let's think about and discuss your architecture ideas first. Don't implement anything just yet!
-
-<details><summary>Suggested Solution</summary>
-
-One solution for this challenge would be to use BigQuery as Data Warehouse and a [Pub/Sub BigQuery Subscription](https://cloud.google.com/pubsub/docs/bigquery) as delivery tool.
-
-This elegant setup completely gets rid of the cost and maintenance of a separate data processing tool set.
-
-Our pipeline will look something like this:
-
-![Hack Your Pipe architecture](../../rsc/pubsub_direct.png)
-
-</details>
-
 To implement our lean ELT pipeline we need:
 - BigQuery Dataset
 - BigQuery Table
