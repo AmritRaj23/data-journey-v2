@@ -156,7 +156,7 @@ The code should look something like this:
 
 To create a flex-template we first need to build the pipeline code as container in the Container Registry.
 
-Build the beam folder content as container named `beam-processing-flex-template` to your Container Registry.
+Build the Dataflow folder content as container named `beam-processing-flex-template` to your Container Registry.
 
 Make sure to update config_env.sh with your variables.
 
