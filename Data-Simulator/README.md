@@ -8,7 +8,7 @@ git clone https://github.com/AmritRaj23/data-journey-v2
 cd data-journey-v2/Data-Simulator
 ```
 
-Enter your GCP Project ID in `./config_env.sh` and set all necessary environment variables.
+Open Cloud Shell Editor and enter your GCP Project ID and GCP Region in `./config_env.sh` and set all necessary environment variables.
 
 ```
 source config_env.sh
@@ -20,17 +20,17 @@ Set the default GCP project.
 gcloud config set project $GCP_PROJECT
 ```
 
-Set your compute zone.
+Set your compute region.
 
 ```
-gcloud config set compute/zone $GCP_REGION
+gcloud config set compute/region $GCP_REGION
 
 ```
 Enable Google Cloud APIs.
 ```
 gcloud services enable compute.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com dataflow.googleapis.com
 ```
-Change the project id in `./terraform.tfvars` to your own project id.
+Open Cloud Shell Editor and change the project id in `./terraform.tfvars` to your own project id.
 
 Change the PubSub Service Account. 
 
