@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS database_datajourney;
 USE database_datajourney;
 
 CREATE TABLE IF NOT EXISTS database_datajourney.example_table (
-event_timestamp timestamp,
+event_timestamp integer,
 event_name varchar(255),
 user_pseudo_id varchar(255)
 );
